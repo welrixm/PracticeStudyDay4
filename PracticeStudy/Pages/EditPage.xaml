@@ -9,12 +9,9 @@
       Title="EditPage">
 
     <Grid>
-         
+        <StackPanel Orientation="Horizontal">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Style="{StaticResource TxtBlock}">Id</TextBlock>
-                <TextBox x:Name="IdTbx" Style="{StaticResource TextBox}" Text="{Binding Id}"></TextBox>
-            </StackPanel>
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Style="{StaticResource TxtBlock}">Наименование</TextBlock>
                 <TextBox x:Name="NameTbx" Style="{StaticResource TextBox}" Text="{Binding Name}"></TextBox>
@@ -36,18 +33,18 @@
                 <TextBlock Style="{StaticResource TxtBlock}">Стоимость</TextBlock>
                 <TextBox x:Name="CostTbx" Style="{StaticResource TextBox}" Text="{Binding Cost}"></TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            
                 <Button x:Name="SaveBtn" Content="Сохранить" Click="SaveBtn_Click" Style="{StaticResource Button}"></Button>
             </StackPanel>
             
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal">  
-                <Image Height="200" Width="200"  x:Name="ProductImage" Source="{Binding MainImage}"></Image>
-                
-            </StackPanel>
-            <Button Style="{StaticResource Button}" Name="AddImageBtn" Click="AddImageBtn_Click">Добавить изображение</Button>
-        </StackPanel>
         
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+              
+                <Image Height="250" Width="200"  x:Name="ProductImage" Source="{Binding MainImage}"></Image>
+                    <Button Style="{StaticResource Button}" Name="AddImageBtn" Click="AddImageBtn_Click">Добавить изображение</Button>
+              
+            
+        </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

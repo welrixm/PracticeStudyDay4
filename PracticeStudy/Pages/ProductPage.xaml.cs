@@ -26,23 +26,18 @@ namespace PracticeStudy.Pages
     public partial class ProductPage : Page
     {
         int actualPage = 0;
-        public ObservableCollection<Product> products
-        {
-            get { return (ObservableCollection<Product>)GetValue(productsProperty); }
-            set { SetValue(productsProperty, value); }
-        }
-        public static readonly DependencyProperty productsProperty = DependencyProperty.Register("products", typeof(ObservableCollection<Product>), typeof(ProductPage));
+        
         public ProductPage()
         {
             InitializeComponent();
-            DispatcherTimer timer = new DispatcherTimer();
+            //DispatcherTimer timer = new DispatcherTimer();
 
             DBConnect.db.Product.Load();
-            products = DBConnect.db.Product.Local;
+            Products = DBConnect.db.Product.Local;
 
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += UpdateData;
-            timer.Start();
+            //timer.Interval = TimeSpan.FromSeconds(1);
+            //timer.Tick += UpdateData;
+            //timer.Start();
             ListProduct.ItemsSource = DBConnect.db.Product.Where(x => x.IsActive == false || x.IsActive == null).ToList();
             GeneralCount.Text = DBConnect.db.Product.Where(x => x.IsActive != false).Count().ToString();
         }
@@ -52,39 +47,48 @@ namespace PracticeStudy.Pages
             ListProduct.ItemsSource = HistoryProduct;
             ListProduct.ItemsSource = DBConnect.db.Product.Where(x => x.Name.StartsWith(TxtSearch.Text) || x.Description.StartsWith(TxtSearch.Text)).ToList();
         }
-        public static List<Product> ItemsSource { get; private set; }
+        public ObservableCollection<Product> Products
+        {
+            get { return (ObservableCollection<Product>)GetValue(ProductsProperty); }
+            set { SetValue(ProductsProperty, value); }
+        }
+        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("Products", typeof(ObservableCollection<Product>), typeof(ProductPage));
         private void Refresh()
         {
-            IEnumerable<Product> filterProduct = DBConnect.db.Product.Where(x => x.IsActive == true);
-            if(CbSort.SelectedIndex > 0)
+            ObservableCollection<Product> products = Products;
+            if (CbSort == null)
+                return;
+            if (CbSort != null)
             {
-                if (CbSort.SelectedIndex == 1)
-                    filterProduct = filterProduct.OrderBy(x => x.Name);
-
-                
-                else
-                    filterProduct = filterProduct.OrderByDescending(x => x.Name);
-                Refresh();
-
-            }
-            if(CbCount.SelectedIndex > -1 && filterProduct.Count() > 0)
-            {
-                int selCount = Convert.ToInt32((CbCount.SelectedItem as ComboBoxItem).Content);
-                filterProduct = filterProduct.Skip(selCount * actualPage).Take(selCount);
-                if (filterProduct.Count() == 0)
+                switch ((CbSort.SelectedItem as ComboBoxItem).Tag)
                 {
-                    actualPage--;
-                    Refresh();
+                    case "1":
+                        products = DBConnect.db.Product.Local;
+                        break;
+                    case "2":
+                        products = new ObservableCollection<Product>(Products.OrderBy(x => x.Name));
+                        break;
+                    case "3":
+                        products = new ObservableCollection<Product>(Products.OrderByDescending(x => x.Name));
+                        break;
+                    case "4":
+                        products = new ObservableCollection<Product>(Products.OrderBy(x => x.DateOfAddition));
+                        break;
+                    case "5":
+                        products = new ObservableCollection<Product>(Products.OrderByDescending(x => x.DateOfAddition));
+                        break;
+
                 }
+
             }
-            ListProduct.ItemsSource = filterProduct.ToList();
-            FoundCount.Text = filterProduct.Count().ToString() + "из";
+            ListProduct.ItemsSource = products.ToList();
+
 
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             var selProduct = (sender as Button).DataContext as Product;
-            Navigation.frameMain.Navigate(new EditPage(selProduct));
+            Navigation.NextPage(new Navig("", new EditPage(selProduct)));
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -92,17 +96,7 @@ namespace PracticeStudy.Pages
 
         }
 
-        //private void CbDown_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    CbSort.ItemsSource = DBConnect.db.Product.OrderByDescending(x => x.Name).ToList();
-        //    CbSort.ItemsSource = DBConnect.db.Product.OrderByDescending(x => x.DateOfAddition).ToList();
-        //}
-
-        //private void CbUp_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    CbSort.ItemsSource = DBConnect.db.Product.OrderBy(x => x.Name).ToList();
-        //    CbSort.ItemsSource = DBConnect.db.Product.OrderBy(x => x.DateOfAddition).ToList();
-        //}
+        
 
         private void CbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -127,6 +121,11 @@ namespace PracticeStudy.Pages
         {
             actualPage++;
             Refresh();
+        }
+
+        private void AddNewProductBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.NextPage(new Navig("", new EditPage(new Product())));
         }
     }
 }

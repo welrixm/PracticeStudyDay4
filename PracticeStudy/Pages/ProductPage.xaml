@@ -82,6 +82,9 @@
                     <TextBlock x:Name="GeneralCount" Style="{StaticResource TxtBlock}"></TextBlock>
                     <Button x:Name="RightBtn" Content="&gt;" Margin="30 0" Width="30" Click="RightBtn_Click" Style="{StaticResource Button}"></Button>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="AddNewProductBtn" Style="{StaticResource Button}" Click="AddNewProductBtn_Click">Добавить</Button>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         

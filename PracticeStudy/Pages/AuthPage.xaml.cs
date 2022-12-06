@@ -54,16 +54,18 @@ namespace PracticeStudy.Pages
                         Properties.Settings.Default.Save();
                     }
                     Navigation.isAuth = true;
-                    Navigation.frameMain.Navigate(new ProductPage());
+                    
 
                 }
             }
+            Navigation.NextPage(new Navig("", new ProductPage()));
 
         }
 
         private void RegistBtn_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.frameMain.Navigate(new RegistrationPage());
+            Navigation.NextPage(new Navig("", new RegistrationPage()));
+            
         }
     }
 }

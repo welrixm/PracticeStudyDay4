@@ -51,7 +51,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Cost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="MainImage" Type="varbinary" MaxLength="50" />
+          <Property Name="MainImage" Type="image" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="DateOfAddition" Type="date" />
           <Property Name="UnitId" Type="int" />
@@ -580,7 +580,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="MainImage" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="MainImage" Type="Binary" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateOfAddition" Type="DateTime" Precision="0" />
           <Property Name="UnitId" Type="Int32" />

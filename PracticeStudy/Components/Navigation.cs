@@ -11,12 +11,16 @@ namespace PracticeStudy.Components
 {
     class Navigation
     {
-        public static Frame frameMain;
         public static User AuthUser = null;
         public static bool isAuth = false;
         public static List<Navig> navigs = new List<Navig>();
         public static MainWindow main;
 
+        public static void NextPage(Navig navig)
+        {
+            navigs.Add(navig);
+            Update(navig);
+        }
         public static void BackPage()
         {
             if (navigs.Count > 1)
@@ -24,11 +28,12 @@ namespace PracticeStudy.Components
                 navigs.RemoveAt(navigs.Count - 1);
 
             }
-            //Update(navigs[navigs.Count - 1]);
+            Update(navigs[navigs.Count - 1]);
         }
         private static void Update(Navig navig)
         {
-            main.BackBtn.Visibility = navigs.Count > 2 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+           // main.BackBtn.Visibility = navigs.Count > 2 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            main.FrameMain.Navigate(navig.Page);
         }
 
     }

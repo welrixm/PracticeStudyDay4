@@ -36,7 +36,12 @@ namespace PracticeStudy.Pages
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DBConnect.db.Product.Add(product);
+            if(product.Id == 0)
+            {
+                DBConnect.db.Product.Add(product);
+
+            }
+            
             DBConnect.db.SaveChanges();
             MessageBox.Show("Успешно сохранено!");
 

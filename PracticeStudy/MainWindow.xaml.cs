@@ -27,8 +27,7 @@ namespace PracticeStudy
         {
             InitializeComponent();
             Navigation.main = this;
-            Navigation.frameMain = FrameMain;
-            FrameMain.Navigate(new AuthPage());
+            Navigation.NextPage(new Navig("", new AuthPage()));
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
